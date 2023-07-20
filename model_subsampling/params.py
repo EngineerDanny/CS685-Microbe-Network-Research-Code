@@ -51,7 +51,7 @@ params_concat_df.to_csv(os.path.join(job_dir, "params.csv"), index=False)
 
 run_one_contents = f"""#!/bin/bash
 #SBATCH --array=0-{n_tasks-1}
-#SBATCH --time=4:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mem=4GB
 #SBATCH --cpus-per-task=1
 #SBATCH --error={job_dir}/slurm-%A_%a.out

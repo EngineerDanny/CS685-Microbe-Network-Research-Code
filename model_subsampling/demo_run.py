@@ -44,8 +44,8 @@ threshold_param_dict = [{'threshold': [threshold]}
                         for threshold in np.concatenate((np.linspace(0, 0.4, 5), np.linspace(0.41, 0.6, 21), np.arange(0.7, 1.01, 0.1)))]
 learner_dict = {
     "Featureless": Featureless(),
-    'Pearson':  MyPearsonRegressor(),
     'Spearman':  SpearmanRankRegressor(),
+    'Pearson':  MyPearsonRegressor(),
     "LASSO": LassoCV(random_state=1),
     "GGM": GaussianGraphicalModel(),
 }

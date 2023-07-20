@@ -1,0 +1,32 @@
+```{r}
+crohns_data_scaled<- as.data.frame(scale(crohns_data_update)) 
+
+# loop through each pair of column in crohns_data_scaled
+
+
+t1 <- crohns_data_scaled$f__Bacteroidaceae
+t2 <- crohns_data_scaled$f__Ruminococcaceae
+
+r1 <- rank(t1);
+r2 <- rank(t2);
+plot(r1,r2);
+calc_cor=cor(r1,r2);
+s1 <- sd(r1);
+s2 <- sd(r2);
+fit <- lm(r2~r1);
+abline(fit);
+new.t1 <- seq(-3, 4,l=100);
+new.r1 <- approx(t1,r1,new.t1,rule=2)$y;
+pred.r2 <- predict(fit,data.frame(r1=new.r1));
+pred.t2 <- approx(r2,t2,pred.r2)$y;
+plot(new.t1,pred.t2,type="n");
+points(t1,t2);
+lines(new.t1,pred.t2,col="red");
+lfit <- lm(t2~t1);
+abline(lfit,col="blue")
+```
+
+
+```{r}
+crohns_data_power_transformed$f__Bacteroidaceae
+```

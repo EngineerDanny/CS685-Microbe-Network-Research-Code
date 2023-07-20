@@ -196,9 +196,9 @@ class SpearmanRankRegressor(BaseEstimator, RegressorMixin):
                 linear_interpolation = interpolate.interp1d(
                     y_train_ranked_transf_unique, y_train_unique, fill_value="extrapolate")
                 calc_y = linear_interpolation(calc_y_ranked)
-                if np.isnan(calc_y):
+                if np.isnan(calc_y).any():
                    calc_y = [np.mean(self.y_train)] * len(calc_y_ranked)
-            except:
+            except Exception as e:
                 calc_y = [np.mean(self.y_train)] * len(calc_y_ranked)
                 
             pred_y_list.append(calc_y)

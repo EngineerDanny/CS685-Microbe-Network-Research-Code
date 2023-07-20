@@ -83,10 +83,6 @@ for ss_index, sub_section in enumerate(shuffled_arr):
             learner.fit(**set_data_dict["train"])
             pred_y = learner.predict(set_data_dict["test"]["X"])
             actual_y = set_data_dict["test"]["y"]
-            # Check if the predicted y contains any nan values
-            if np.isnan(pred_y).any():
-                continue
-            
             mse = mean_squared_error(actual_y, pred_y)
             # r2_coef = r2_score(actual_y, pred_y)
 

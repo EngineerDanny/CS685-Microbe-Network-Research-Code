@@ -70,7 +70,7 @@ my_reg_param = 'threshold'
 source_target_df_list = []
 
 index_of_pred_col_list = np.arange(0, dataset_pd.shape[1])
-index_of_pred_col_list = np.arange(0, 64)
+# index_of_pred_col_list = np.arange(0, 64)
 
 
 k_fold = KFold(n_splits=n_splits, shuffle=True, random_state=1)

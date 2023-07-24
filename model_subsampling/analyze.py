@@ -12,6 +12,7 @@ date_time = "2023-06-28_13:01"
 date_time = "2023-07-19_16:19"
 date_time = "2023-07-19_20:27"
 date_time = "2023-07-20_16:36"
+date_time = "2023-07-20_16:44"
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/model_subsampling_{date_time}/results/*.csv"):
@@ -20,3 +21,5 @@ error_df = pd.concat(out_df_list)
 
 root_results_dir = "/projects/genomic-ml/da2343/ml_project_1/model_subsampling/results"
 error_df.to_csv(f"{root_results_dir}/{date_time}_results.csv", index=False)
+
+print('done')

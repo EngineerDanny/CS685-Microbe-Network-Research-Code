@@ -10,6 +10,8 @@ date_time = "2023-06-21_17:26"
 date_time = "2023-06-21_19:01"
 date_time = "2023-06-28_13:01"
 date_time = "2023-07-19_16:19"
+date_time = "2023-07-19_20:27"
+date_time = "2023-07-20_16:36"
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/model_subsampling_{date_time}/results/*.csv"):

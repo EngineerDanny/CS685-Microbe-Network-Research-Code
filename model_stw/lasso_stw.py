@@ -16,7 +16,8 @@ from constants import *
 warnings.filterwarnings('ignore')
 np.set_printoptions(threshold=np.inf)
     
-data_set_name = "necromass_bacteria"
+# data_set_name = "necromass_bacteria"
+data_set_name = "necromass_fungi"
 # data_set_name = "crohns"
 algorithm = "LASSO"
 

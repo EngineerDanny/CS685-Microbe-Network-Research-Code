@@ -14,8 +14,11 @@ dataset_list = [
     # {"dataset_name": "necromass_bacteria",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
  
-    {"dataset_name": "necromass_fungi",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv")},
+    # {"dataset_name": "necromass_fungi",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv")},
+    
+    {"dataset_name": "necromass_bacteria_fungi",
+        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
 
     # {"dataset_name": "amgut1",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_power_transformed.csv")},
@@ -52,6 +55,7 @@ dataset_list = [
 dataset_dict = {
     "necromass_bacteria": f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
     "necromass_fungi": f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv",
+    "necromass_bacteria_fungi": f"{root_data_dir}/necromass/bacteria_fungi_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
     
     "amgut1": f"{root_data_dir}/amgut1_data_power_transformed.csv",
     "amgut1_standard_scaled": f"{root_data_dir}/amgut1_data_standard_scaled.csv",

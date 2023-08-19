@@ -17,9 +17,10 @@ warnings.filterwarnings('ignore')
 np.set_printoptions(threshold=np.inf)
     
 # data_set_name = "necromass_bacteria"
-data_set_name = "necromass_fungi"
-algorithm = "Spearman"
+# data_set_name = "necromass_fungi"
+data_set_name = "necromass_bacteria_fungi"
 
+algorithm = "Spearman"
 dataset_path = dataset_dict[data_set_name]
 n_splits = 3
 

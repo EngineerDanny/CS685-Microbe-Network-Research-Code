@@ -17,11 +17,11 @@ date_time = "2023-08-03_18:13"
 date_time = "2023-08-18_14:28"
 
 out_df_list = []
-for out_csv in glob(f"/scratch/da2343/model_subsampling_{date_time}/results/*.csv"):
+for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):
     out_df_list.append(pd.read_csv(out_csv))
 error_df = pd.concat(out_df_list)
 
-root_results_dir = "/projects/genomic-ml/da2343/ml_project_1/model_subsampling/results"
+root_results_dir = "/projects/genomic-ml/da2343/ml_project_1/algo_comparison/results"
 error_df.to_csv(f"{root_results_dir}/{date_time}_results.csv", index=False)
 
 print('done')

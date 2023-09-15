@@ -43,7 +43,7 @@ params_concat_df = pd.concat(params_df_list, ignore_index=True)
 
 n_tasks, ncol = params_concat_df.shape
 date_time = datetime.now().strftime("%Y-%m-%d_%H:%M")
-job_name = f"model_subsampling_{date_time}"
+job_name = f"algo_comparison_{date_time}"
 job_dir = "/scratch/da2343/" + job_name
 results_dir = os.path.join(job_dir, "results")
 os.system("mkdir -p "+results_dir)

@@ -3,65 +3,11 @@ import pandas as pd
 import numpy as np
 import os
 import shutil
+import sys
 
+sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
+from constants import *
 
-def get_df_from_path(path):
-    df = pd.read_csv(path, header=0)
-    return df
-
-
-dataset_list = [
-
-    # {"dataset_name": "amgut1",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut1_data_power_transformed.csv")},
-
-    # {"dataset_name": "amgut1_standard_scaled",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut1_data_standard_scaled.csv")},
-
-    # {"dataset_name": "amgut1_log1_standard_scaled",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut1_data_log1_standard_scaled_transformed.csv")},
-    
-    
-    
-    {"dataset_name": "amgut2",
-        "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut2_data_power_transformed.csv")},
-
-    {"dataset_name": "amgut2_standard_scaled",
-        "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut2_data_standard_scaled.csv")},
-
-    {"dataset_name": "amgut2_log1_standard_scaled",
-        "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut2_data_log1_standard_scaled_transformed.csv")},
-
-
-
-    # {"dataset_name": "amgut1_log2_standard_scaled",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut1_data_log2_standard_scaled_transformed.csv")},
-
-    # {"dataset_name": "amgut1_box_cox",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut1_data_box_cox_transformed.csv")},
-
-
-    # {"dataset_name": "amgut2",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/amgut2_data_power_transformed.csv")},
-
-    # {"dataset_name": "crohns",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/crohns_data_power_transformed.csv")},
-
-    # {"dataset_name": "ioral",
-    #  "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/ioral_data_power_transformed.csv")},
-
-    # {"dataset_name": "hmp2prot",
-    #  "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/hmp2prot_data_power_transformed.csv")},
-
-    # {"dataset_name": "hmp216S",
-    #  "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/hmp216S_data_power_transformed.csv")},
-
-    # {"dataset_name": "baxter_crc",
-    #     "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/baxter_crc_data_power_transformed.csv")},
-
-    # {"dataset_name": "glne007",
-    #  "dataframe": get_df_from_path("/home/da2343/cs685_fall22/data/glne007_data_power_transformed.csv")},
-]
 params_df_list = []
 
 for dataset in dataset_list:

@@ -3,19 +3,15 @@ import numpy as np
 from datetime import date
 from sklearn.linear_model import LassoCV, BayesianRidge, LinearRegression
 from sklearn.feature_selection import mutual_info_regression
-from sklearn.model_selection import KFold
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import *
 from sklearn.base import BaseEstimator, RegressorMixin
-from sklearn.model_selection import GridSearchCV
 from scipy.stats import multivariate_normal
 import scipy.stats as ss
-from scipy.stats import spearmanr
 from sklearn.covariance import GraphicalLassoCV, ledoit_wolf
 from scipy.stats import pearsonr, spearmanr, kendalltau
 from scipy import interpolate
-from sklearn.preprocessing import *
 from sklearn.pipeline import make_pipeline
 
 
@@ -28,22 +24,23 @@ class Featureless:
         test_nrow, test_ncol = test_features.shape
         return np.repeat(self.mean, test_nrow)
 
+
 class GaussianGraphicalModel:
     def fit(self, X, y):
         full_train_data = np.concatenate((y[:, None], X), axis=1)
         # ledoit_wolf_cov = ledoit_wolf(full_train_data)[0]
         # self.precision = np.linalg.inv(ledoit_wolf_cov)
         try:
-           model = GraphicalLassoCV().fit(full_train_data)
-           self.precision = model.precision_
+            model = GraphicalLassoCV().fit(full_train_data)
+            self.precision = model.precision_
         except:
-           ledoit_wolf_cov = ledoit_wolf(full_train_data)[0]
-           self.precision = np.linalg.inv(ledoit_wolf_cov)
+            ledoit_wolf_cov = ledoit_wolf(full_train_data)[0]
+            self.precision = np.linalg.inv(ledoit_wolf_cov)
         return self
 
     def predict(self, X):
         precision_first_val = self.precision[0, 0]
-        constant_coef = (- 1) / (2 * precision_first_val)
+        constant_coef = (-1) / (2 * precision_first_val)
         mat_index = 0
         pre_y_list = []
 
@@ -57,16 +54,17 @@ class GaussianGraphicalModel:
         pre_y_sum = np.sum(np.array(pre_y_list), axis=0)
         pred_y = np.multiply(constant_coef, pre_y_sum)
         return pred_y
-    
+
     def get_source_target(self, X, y, index):
-         # concatenate X and y, insert y into the index column
+        # concatenate X and y, insert y into the index column
         Xy = np.insert(X, index, y, axis=1)
         precision_matrix = GraphicalLassoCV().fit(Xy).precision_
 
+
 class MyPearsonRegressor(BaseEstimator, RegressorMixin):
     def __init__(self, threshold=0.0):
-        self.threshold = threshold 
-       
+        self.threshold = threshold
+
     def fit(self, X, y):
         slope_list = []
         intercept_list = []
@@ -97,23 +95,33 @@ class MyPearsonRegressor(BaseEstimator, RegressorMixin):
             X_col = X[:, index_col]
             # use the average of the slope_list as the default slope
             filtered_slope_list = [x for x in self.slope_list if x is not None]
-            mean_filtered_slope = np.mean(filtered_slope_list) if len(
-                filtered_slope_list) > 0 else 0
-            calc_slope = mean_filtered_slope if self.slope_list[
-                index_col] is None else self.slope_list[index_col]
+            mean_filtered_slope = (
+                np.mean(filtered_slope_list) if len(filtered_slope_list) > 0 else 0
+            )
+            calc_slope = (
+                mean_filtered_slope
+                if self.slope_list[index_col] is None
+                else self.slope_list[index_col]
+            )
 
-            filtered_intercept_list = [
-                x for x in self.intercept_list if x is not None]
-            mean_filtered_intercept = np.mean(filtered_intercept_list) if len(
-                filtered_intercept_list) > 0 else 0
-            calc_intercept = mean_filtered_intercept if self.intercept_list[
-                index_col] is None else self.intercept_list[index_col]
+            filtered_intercept_list = [x for x in self.intercept_list if x is not None]
+            mean_filtered_intercept = (
+                np.mean(filtered_intercept_list)
+                if len(filtered_intercept_list) > 0
+                else 0
+            )
+            calc_intercept = (
+                mean_filtered_intercept
+                if self.intercept_list[index_col] is None
+                else self.intercept_list[index_col]
+            )
 
             calc_y = calc_slope * X_col + calc_intercept
             pred_y_list.append(calc_y)
         # Find the mean of the predicted y values
         pred_y = np.mean(pred_y_list, axis=0)
         return pred_y
+
 
 class SpearmanRankRegressor(BaseEstimator, RegressorMixin):
     def __init__(self, threshold=0.0):
@@ -131,10 +139,10 @@ class SpearmanRankRegressor(BaseEstimator, RegressorMixin):
         self.y_train = y
         # X_train_ranked_transf = ss.rankdata(X, axis=0)
         self.y_train_ranked_transf = self.preprocessor2.fit_transform(
-            ss.rankdata(y).reshape(-1, 1)).flatten()
+            ss.rankdata(y).reshape(-1, 1)
+        ).flatten()
         # self.y_train_ranked_transf = ss.rankdata(y)
-        X_train_ranked_transf = self.preprocessor1.fit_transform(
-            ss.rankdata(X, axis=0))
+        X_train_ranked_transf = self.preprocessor1.fit_transform(ss.rankdata(X, axis=0))
         # X_train_ranked_transf = PowerTransformer().fit_transform(ss.rankdata(X, axis=0))
         # self.y_train_ranked_transf = PowerTransformer().fit_transform(ss.rankdata(y))
 
@@ -144,7 +152,8 @@ class SpearmanRankRegressor(BaseEstimator, RegressorMixin):
         for index_col in range(X_train_ranked_transf.shape[1]):
             X_col = X_train_ranked_transf[:, index_col]
             calc_slope, calc_intercept = self.find_model_params(
-                X_col, self.y_train_ranked_transf)
+                X_col, self.y_train_ranked_transf
+            )
             slope_list.append(calc_slope)
             intercept_list.append(calc_intercept)
         # Find the mean of the gradients and intercepts
@@ -165,46 +174,59 @@ class SpearmanRankRegressor(BaseEstimator, RegressorMixin):
 
     def predict(self, X):
         pred_y_list = []
-        X_test_ranked_transf = self.preprocessor1.fit_transform(
-            ss.rankdata(X, axis=0))
+        X_test_ranked_transf = self.preprocessor1.fit_transform(ss.rankdata(X, axis=0))
         # X_test_ranked_transf = ss.rankdata(X, axis=0)
 
         for index_col in range(X_test_ranked_transf.shape[1]):
             X_col = X_test_ranked_transf[:, index_col]
             # use the average of the slope_list as the default slope
             filtered_slope_list = [x for x in self.slope_list if x is not None]
-            mean_filtered_slope = np.mean(filtered_slope_list) if len(
-                filtered_slope_list) > 0 else 0
-            calc_slope = mean_filtered_slope if self.slope_list[
-                index_col] is None else self.slope_list[index_col]
+            mean_filtered_slope = (
+                np.mean(filtered_slope_list) if len(filtered_slope_list) > 0 else 0
+            )
+            calc_slope = (
+                mean_filtered_slope
+                if self.slope_list[index_col] is None
+                else self.slope_list[index_col]
+            )
 
-            filtered_intercept_list = [
-                x for x in self.intercept_list if x is not None]
-            mean_filtered_intercept = np.mean(filtered_intercept_list) if len(
-                filtered_intercept_list) > 0 else 0
-            calc_intercept = mean_filtered_intercept if self.intercept_list[
-                index_col] is None else self.intercept_list[index_col]
+            filtered_intercept_list = [x for x in self.intercept_list if x is not None]
+            mean_filtered_intercept = (
+                np.mean(filtered_intercept_list)
+                if len(filtered_intercept_list) > 0
+                else 0
+            )
+            calc_intercept = (
+                mean_filtered_intercept
+                if self.intercept_list[index_col] is None
+                else self.intercept_list[index_col]
+            )
 
             calc_y_ranked = calc_slope * X_col + calc_intercept
 
             # remove duplicate values from self.y_train_ranked_transf and use indexes to remove items from self.y_train
             y_train_ranked_transf_unique, sorted_indexes = np.unique(
-                self.y_train_ranked_transf, return_index=True)
+                self.y_train_ranked_transf, return_index=True
+            )
             y_train_unique = self.y_train[sorted_indexes]
 
             try:
                 linear_interpolation = interpolate.interp1d(
-                    y_train_ranked_transf_unique, y_train_unique, fill_value="extrapolate")
+                    y_train_ranked_transf_unique,
+                    y_train_unique,
+                    fill_value="extrapolate",
+                )
                 calc_y = linear_interpolation(calc_y_ranked)
                 if np.isnan(calc_y).any():
-                   calc_y = [np.mean(self.y_train)] * len(calc_y_ranked)
+                    calc_y = [np.mean(self.y_train)] * len(calc_y_ranked)
             except Exception as e:
                 calc_y = [np.mean(self.y_train)] * len(calc_y_ranked)
-                
+
             pred_y_list.append(calc_y)
         # Find the mean of the predicted y values
         pred_y = np.mean(np.array(pred_y_list), axis=0)
         return pred_y
+
 
 class SpearmanRankRegressorTest(BaseEstimator, RegressorMixin):
     def __init__(self, threshold=0.0):
@@ -214,14 +236,18 @@ class SpearmanRankRegressorTest(BaseEstimator, RegressorMixin):
     def fit(self, X, y):
         self.y_train = y
         self.y_train_ranked_transf = y
-        X_train_ranked_transf = self.preprocessor.fit_transform(ss.rankdata(X, axis=0), ss.rankdata(y))
+        X_train_ranked_transf = self.preprocessor.fit_transform(
+            ss.rankdata(X, axis=0), ss.rankdata(y)
+        )
 
         slope_list = []
         intercept_list = []
 
         for index_col in range(X_train_ranked_transf.shape[1]):
             X_col = X_train_ranked_transf[:, index_col]
-            calc_slope, calc_intercept = self.find_model_params(X_col, self.y_train_ranked_transf)
+            calc_slope, calc_intercept = self.find_model_params(
+                X_col, self.y_train_ranked_transf
+            )
             slope_list.append(calc_slope)
             intercept_list.append(calc_intercept)
         self.slope_list = slope_list
@@ -245,24 +271,37 @@ class SpearmanRankRegressorTest(BaseEstimator, RegressorMixin):
         for index_col in range(X_test_ranked_transf.shape[1]):
             X_col = X_test_ranked_transf[:, index_col]
             filtered_slope_list = [x for x in self.slope_list if x is not None]
-            mean_filtered_slope = np.mean(filtered_slope_list) if len(
-                filtered_slope_list) > 0 else 0
-            calc_slope = mean_filtered_slope if self.slope_list[
-                index_col] is None else self.slope_list[index_col]
+            mean_filtered_slope = (
+                np.mean(filtered_slope_list) if len(filtered_slope_list) > 0 else 0
+            )
+            calc_slope = (
+                mean_filtered_slope
+                if self.slope_list[index_col] is None
+                else self.slope_list[index_col]
+            )
 
-            filtered_intercept_list = [
-                x for x in self.intercept_list if x is not None]
-            mean_filtered_intercept = np.mean(filtered_intercept_list) if len(
-                filtered_intercept_list) > 0 else 0
-            calc_intercept = mean_filtered_intercept if self.intercept_list[
-                index_col] is None else self.intercept_list[index_col]
+            filtered_intercept_list = [x for x in self.intercept_list if x is not None]
+            mean_filtered_intercept = (
+                np.mean(filtered_intercept_list)
+                if len(filtered_intercept_list) > 0
+                else 0
+            )
+            calc_intercept = (
+                mean_filtered_intercept
+                if self.intercept_list[index_col] is None
+                else self.intercept_list[index_col]
+            )
 
             calc_y_ranked = calc_slope * X_col + calc_intercept
 
-            y_train_ranked_transf_unique, sorted_indexes = np.unique(self.y_train_ranked_transf, return_index=True)
+            y_train_ranked_transf_unique, sorted_indexes = np.unique(
+                self.y_train_ranked_transf, return_index=True
+            )
             y_train_unique = self.y_train[sorted_indexes]
 
-            linear_interpolation = interpolate.interp1d(y_train_ranked_transf_unique, y_train_unique, fill_value="extrapolate")
+            linear_interpolation = interpolate.interp1d(
+                y_train_ranked_transf_unique, y_train_unique, fill_value="extrapolate"
+            )
 
             calc_y = linear_interpolation(calc_y_ranked)
 
@@ -274,32 +313,32 @@ class SpearmanRankRegressorTest(BaseEstimator, RegressorMixin):
 
 ### HELPER FUNCTIONS ###
 # Returns the number of edges in the graph
-# based on the threshold on the Pearson correlation matrix    
+# based on the threshold on the Pearson correlation matrix
 def get_corr_hyper_params(X, y, cv_results):
-    threshold_list = cv_results['params']
+    threshold_list = cv_results["params"]
     param_list = []
     # concatenate X and y
     Xy = np.concatenate((X, y.reshape(-1, 1)), axis=1)
     for threshold_dict in threshold_list:
-        threshold = threshold_dict['threshold']
-        #calculate the Pearson correlation matrix
+        threshold = threshold_dict["threshold"]
+        # calculate the Pearson correlation matrix
         corr_matrix = np.corrcoef(Xy, rowvar=False)
         np.fill_diagonal(corr_matrix, np.nan)
         corr_matrix = np.tril(corr_matrix)
         abs_corr_matrix = np.abs(corr_matrix)
-        #get the number of edges
+        # get the number of edges
         no_of_edges = np.sum(abs_corr_matrix > threshold)
         # append the number of edges and the threshold to the list as dictionary
-        param_list.append({'threshold': threshold, 
-                            'edges': no_of_edges})
+        param_list.append({"threshold": threshold, "edges": no_of_edges})
     return param_list
+
 
 # Returns a list of source, target, weight tuples for optimum correlation matrix
 def get_corr_source_target(X, y, index, threshold):
     # concatenate X and y, insert y into the index column
     Xy = np.insert(X, index, y, axis=1)
     # Xy = np.concatenate((X, y.reshape(-1, 1)), axis=1)
-    #calculate the Pearson correlation matrix
+    # calculate the Pearson correlation matrix
     corr_matrix = np.corrcoef(Xy, rowvar=False)
     np.fill_diagonal(corr_matrix, np.nan)
     # get the indices of the upper triangle elements
@@ -315,16 +354,17 @@ def get_corr_source_target(X, y, index, threshold):
     result = list(zip(source_target[:, 0], source_target[:, 1], weights))
     return result
 
+
 # Returns a list of source, target, weight tuples for the precision matrix
 def get_glasso_source_target(X, y, index):
     # concatenate X and y, insert y into the index column
     Xy = np.insert(X, index, y, axis=1)
     # get the precision matrix
     try:
-       precision_matrix = GraphicalLassoCV(n_jobs=-1).fit(Xy).precision_
+        precision_matrix = GraphicalLassoCV(n_jobs=-1).fit(Xy).precision_
     except:
-       ledoit_wolf_cov = ledoit_wolf(Xy)[0]
-       precision_matrix = np.linalg.inv(ledoit_wolf_cov)
+        ledoit_wolf_cov = ledoit_wolf(Xy)[0]
+        precision_matrix = np.linalg.inv(ledoit_wolf_cov)
     # replace the diagonal with np.nan
     np.fill_diagonal(precision_matrix, np.nan)
     # get the indices of the upper and lower triangle elements
@@ -341,5 +381,7 @@ def get_glasso_source_target(X, y, index):
     # get the corresponding weights from the absolute precision matrix
     weights = precision_matrix[source_target[:, 0], source_target[:, 1]]
     # create a list of source, target, weight tuples with non-zero weights
-    result = [t for t in zip(source_target[:, 0], source_target[:, 1], weights) if t[2] != 0]
+    result = [
+        t for t in zip(source_target[:, 0], source_target[:, 1], weights) if t[2] != 0
+    ]
     return result

@@ -10,7 +10,7 @@ from glob import glob
 date_time = "2023-05-29_14:34"
 
 out_df_list = []
-for out_csv in glob(f"/scratch/da2343/model_comparison_{date_time}/results/*.csv"):
+for out_csv in glob(f"/scratch/da2343/data_transf_comp_{date_time}/results/*.csv"):
     out_df_list.append(pd.read_csv(out_csv))
 error_df = pd.concat(out_df_list)
-error_df.to_csv(f"/home/da2343/cs685_fall22/model_comparison/results/{date_time}_results.csv", index=False)
+error_df.to_csv(f"/home/da2343/cs685_fall22/data_transf_comp/results/{date_time}_results.csv", index=False)

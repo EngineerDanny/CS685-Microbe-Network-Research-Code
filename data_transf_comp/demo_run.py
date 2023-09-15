@@ -9,6 +9,7 @@ import sys
 import os
 from scipy.stats import pearsonr
 from sklearn.preprocessing import *
+
 sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from model_header import *
 from constants import *
@@ -28,15 +29,10 @@ data_set_name = param_dict["Dataset"]
 n_of_samples = param_dict["# of Samples"]
 index_of_pred_col = param_dict["Index of Prediction Col"]
 
-# Name some string contants
-out_dir = "/scratch/da2343/cs685fall22/data"
-out_file = out_dir + f'/my_algos_{str(date.today())}_results.csv'
-
 dataset_path = dataset_dict[data_set_name]
 n_splits = 3
 
 # Import the csv file of the dataset
-# TODO: remove index_col=0
 dataset_pd = pd.read_csv(dataset_path, header=0)
 sub_data_dict = {}
 # drop only one column per every iteration to form the input matrix
@@ -52,15 +48,17 @@ data_tuple = (input_mat_update, output_vec_update, index_of_pred_col)
 
 # Create a list of alphas for the LASSOCV to cross-validate against
 threshold_param_list = np.concatenate(
-    (np.linspace(0, 0.2, 125), np.linspace(0.21, 0.4, 21), np.arange(0.5, 1.01, 0.1)))
-threshold_param_dict = [{'threshold': [threshold]}
-                        for threshold in threshold_param_list]
+    (np.linspace(0, 0.2, 125), np.linspace(0.21, 0.4, 21), np.arange(0.5, 1.01, 0.1))
+)
+threshold_param_dict = [
+    {"threshold": [threshold]} for threshold in threshold_param_list
+]
 
 learner_dict = {
     "Featureless": Featureless(),
     # 'Pearson Correlation':  GridSearchCV(MyPearsonRegressor(), threshold_param_dict, cv=5, scoring='neg_mean_squared_error'),
-    'Spearman': SpearmanRankRegressor(),
-    'Pearson': MyPearsonRegressor(),
+    "Spearman": SpearmanRankRegressor(),
+    "Pearson": MyPearsonRegressor(),
     "LassoCV": LassoCV(random_state=1),
     "GGM": GaussianGraphicalModel(),
 }
@@ -77,7 +75,7 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
     for set_name, index_vec in index_dict.items():
         set_data_dict[set_name] = {
             "X": input_mat[index_vec],
-            "y": output_vec[index_vec]
+            "y": output_vec[index_vec],
         }
     # Loop through the learners
     # Fit the learner to the training data
@@ -91,10 +89,12 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
         # Create a dataframe with the following columns:
         # Predicted labels, Actual labels, FoldID, # of Samples,
         # Dataset, Index of Predicted Column, Algorithm
-        pred_actual_df = pd.DataFrame({
-            "Predicted Label": pred_y.tolist(),
-            "Actual Label": actual_y.tolist(),
-        })
+        pred_actual_df = pd.DataFrame(
+            {
+                "Predicted Label": pred_y.tolist(),
+                "Actual Label": actual_y.tolist(),
+            }
+        )
         pred_actual_df["FoldID"] = fold_id
         pred_actual_df["# of Train Samples"] = input_mat.shape[0]
         pred_actual_df["Dataset"] = data_set_name
@@ -107,17 +107,22 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
         # calc pearson correlation between actual and predicted
         # pearson_coef = pearsonr(actual_y, pred_y)[0]
 
-        test_err_list.append(pd.DataFrame({
-            "Mean Squared Error": mse,
-            "Root Mean Squared Error": np.sqrt(mse),
-            # "R Squared": pearson_coef ** 2,
-            # "R2 Score": r2_coef,
-            "FoldID": fold_id,
-            '# of Train Samples': int(input_mat.shape[0]/n_splits),
-            "Dataset": data_set_name,
-            "Index of Predicted Column": index_col,
-            "Algorithm": learner_name,
-        }, index=[0]))
+        test_err_list.append(
+            pd.DataFrame(
+                {
+                    "Mean Squared Error": mse,
+                    "Root Mean Squared Error": np.sqrt(mse),
+                    # "R Squared": pearson_coef ** 2,
+                    # "R2 Score": r2_coef,
+                    "FoldID": fold_id,
+                    "# of Train Samples": int(input_mat.shape[0] / n_splits),
+                    "Dataset": data_set_name,
+                    "Index of Predicted Column": index_col,
+                    "Algorithm": learner_name,
+                },
+                index=[0],
+            )
+        )
 
 main_test_err_df = pd.concat(test_err_list)
 main_pred_actual_df = pd.concat(pred_actual_list)
@@ -125,7 +130,6 @@ main_pred_actual_df = pd.concat(pred_actual_list)
 
 # Save dataframe as a csv to output directory
 out_file = f"results/{param_row}.csv"
-os.system("mkdir -p " + out_dir)
 # main_pred_actual_df.to_csv(out_file, encoding='utf-8', index=False)
-main_test_err_df.to_csv(out_file, encoding='utf-8', index=False)
+main_test_err_df.to_csv(out_file, encoding="utf-8", index=False)
 print("Done!!")

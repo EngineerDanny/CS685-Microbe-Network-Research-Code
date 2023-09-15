@@ -9,9 +9,9 @@ import sys
 import os
 from scipy.stats import pearsonr
 from sklearn.preprocessing import *
-# import the model_header.py file from the shared directory
-sys.path.append(os.path.abspath("/home/da2343/cs685_fall22/shared"))
+sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from model_header import *
+from constants import *
 
 
 params_df = pd.read_csv("params.csv")
@@ -31,29 +31,6 @@ index_of_pred_col = param_dict["Index of Prediction Col"]
 # Name some string contants
 out_dir = "/scratch/da2343/cs685fall22/data"
 out_file = out_dir + f'/my_algos_{str(date.today())}_results.csv'
-
-dataset_dict = {
-    "amgut1": "/home/da2343/cs685_fall22/data/amgut1_data_power_transformed.csv",
-    "amgut1_standard_scaled": "/home/da2343/cs685_fall22/data/amgut1_data_standard_scaled.csv",
-    "amgut1_log1_standard_scaled": "/home/da2343/cs685_fall22/data/amgut1_data_log1_standard_scaled_transformed.csv",
-
-    "amgut2": "/home/da2343/cs685_fall22/data/amgut2_data_power_transformed.csv",
-    "amgut2_standard_scaled": "/home/da2343/cs685_fall22/data/amgut2_data_standard_scaled.csv",
-    "amgut2_log1_standard_scaled": "/home/da2343/cs685_fall22/data/amgut2_data_log1_standard_scaled_transformed.csv",
-    
-    
-    "crohns": "/home/da2343/cs685_fall22/data/crohns_data_power_transformed.csv",
-    "baxter_crc": "/home/da2343/cs685_fall22/data/baxter_crc_data_power_transformed.csv",
-    "enterotype": "/home/da2343/cs685_fall22/data/enterotype_data_power_transformed.csv",
-    "esophagus": "/home/da2343/cs685_fall22/data/esophagus_data_power_transformed.csv",
-    "glne007": "/home/da2343/cs685_fall22/data/glne007_data_power_transformed.csv",
-    "global_patterns": "/home/da2343/cs685_fall22/data/global_patterns_data_power_transformed.csv",
-    "hmp2prot": "/home/da2343/cs685_fall22/data/hmp2prot_data_power_transformed.csv",
-    "hmp216S": "/home/da2343/cs685_fall22/data/hmp216S_data_power_transformed.csv",
-    'ioral': '/home/da2343/cs685_fall22/data/ioral_data_power_transformed.csv',
-    'mixmpln': '/home/da2343/cs685_fall22/data/mixmpln_real_data_power_transformed.csv',
-    'soilrep': '/home/da2343/cs685_fall22/data/soilrep_data_power_transformed.csv',
-}
 
 dataset_path = dataset_dict[data_set_name]
 n_splits = 3
@@ -82,10 +59,10 @@ threshold_param_dict = [{'threshold': [threshold]}
 learner_dict = {
     "Featureless": Featureless(),
     # 'Pearson Correlation':  GridSearchCV(MyPearsonRegressor(), threshold_param_dict, cv=5, scoring='neg_mean_squared_error'),
-    'Pearson Correlation': MyPearsonRegressor(),
-    'Spearman Rank': SpearmanRankRegressor(),
+    'Spearman': SpearmanRankRegressor(),
+    'Pearson': MyPearsonRegressor(),
     "LassoCV": LassoCV(random_state=1),
-    "Gaussian Graphical Model": GaussianGraphicalModel(),
+    "GGM": GaussianGraphicalModel(),
 }
 
 

@@ -11,14 +11,26 @@ root_data_dir = "/projects/genomic-ml/da2343/ml_project_1/data"
 
 dataset_list = [
     
-    # {"dataset_name": "necromass_bacteria",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
+    ## Necromass datasets with species level data
+    {"dataset_name": "necromass_bacteria_species",
+        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
  
-    # {"dataset_name": "necromass_fungi",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv")},
+    {"dataset_name": "necromass_fungi_species",
+        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv")},
     
-    {"dataset_name": "necromass_bacteria_fungi",
+    {"dataset_name": "necromass_bacteria_fungi_species",
         "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
+    
+    ## Necromass datasets with genus level data
+    # {"dataset_name": "necromass_bacteria_genus",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_genus_power_transformed.csv")},
+    
+    # {"dataset_name": "necromass_fungi_genus",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_genus_power_transformed.csv")},
+    
+    # {"dataset_name": "necromass_bacteria_fungi_genus",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_genus_power_transformed.csv")},
+    
 
     # {"dataset_name": "amgut1",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_power_transformed.csv")},
@@ -53,9 +65,13 @@ dataset_list = [
 
 
 dataset_dict = {
-    "necromass_bacteria": f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
-    "necromass_fungi": f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv",
-    "necromass_bacteria_fungi": f"{root_data_dir}/necromass/bacteria_fungi_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
+    "necromass_bacteria_species": f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
+    "necromass_fungi_species": f"{root_data_dir}/necromass/fungi_rarefied_otu_mapping_PKfix_power_transformed.csv",
+    "necromass_bacteria_fungi_species": f"{root_data_dir}/necromass/bacteria_fungi_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv",
+    
+    "necromass_bacteria_genus": f"{root_data_dir}/necromass/bacteria_genus_power_transformed.csv",
+    "necromass_fungi_genus": f"{root_data_dir}/necromass/fungi_genus_power_transformed.csv",
+    "necromass_bacteria_fungi_genus": f"{root_data_dir}/necromass/bacteria_fungi_genus_power_transformed.csv",
     
     "amgut1": f"{root_data_dir}/amgut1_data_power_transformed.csv",
     "amgut1_standard_scaled": f"{root_data_dir}/amgut1_data_standard_scaled.csv",

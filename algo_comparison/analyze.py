@@ -18,6 +18,8 @@ date_time = "2023-08-18_14:28"
 
 # necromass genus level OTU data
 date_time = "2023-09-15_18:01"
+# necromass species level OTU data
+date_time = "2023-09-15_20:03"
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):

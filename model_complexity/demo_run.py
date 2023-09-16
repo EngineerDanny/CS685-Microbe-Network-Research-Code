@@ -27,7 +27,6 @@ param_dict = dict(params_df.iloc[param_row, :])
 data_set_name = param_dict["Dataset"]
 index_of_pred_col = param_dict["Index of Prediction Col"]
 
-
 dataset_path = dataset_dict[data_set_name]
 n_splits = 3
 
@@ -94,12 +93,11 @@ my_algorithm_list = [
 ]
 
 lasso_coef_df_list = []
-pearson_mc_df_list = []
-source_target_df_list = []
+corr_mc_df_list = []
 
-pearson_source_target_df_list = []
-spearman_source_target_df_list = []
-ggm_source_target_df_list = []
+pearson_stw_df_list = []
+spearman_stw_df_list = []
+ggm_stw_df_list = []
 
 
 k_fold = KFold(n_splits=n_splits, shuffle=True, random_state=1)
@@ -129,61 +127,59 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
                 y=y_train if my_algo_name == "Pearson" else y_train_ranked,
                 cv_results=my_learner.cv_results_,
             )
-            pearson_mc_df = pd.DataFrame(params_list)
-            # rename the column name threshold to reg_param
-            pearson_mc_df.rename(columns={my_reg_param: "reg_param"}, inplace=True)
-            pearson_mc_df["subtrain_score"] = (
+            corr_mc_df = pd.DataFrame(params_list)
+            corr_mc_df.rename(columns={my_reg_param: "reg_param"}, inplace=True)
+            corr_mc_df["subtrain_score"] = (
                 my_learner.cv_results_["mean_train_score"] * -1
             )
-            pearson_mc_df["validation_score"] = (
+            corr_mc_df["validation_score"] = (
                 my_learner.cv_results_["mean_test_score"] * -1
             )
-            pearson_mc_df["algorithm"] = my_algo_name
-            pearson_mc_df["data_set_name"] = data_set_name
-            pearson_mc_df["fold_id"] = fold_id
-            pearson_mc_df["index_of_pred_col"] = index_of_pred_col
-            pearson_mc_df_list.append(pearson_mc_df)
+            corr_mc_df["algorithm"] = my_algo_name
+            corr_mc_df["data_set_name"] = data_set_name
+            corr_mc_df["fold_id"] = fold_id
+            corr_mc_df["index_of_pred_col"] = index_of_pred_col
+            corr_mc_df_list.append(corr_mc_df)
 
             # Create the source-target dataframe
-            best_reg_param = pearson_mc_df.loc[
-                pearson_mc_df["validation_score"].idxmin(), "reg_param"
+            best_reg_param = corr_mc_df.loc[
+                corr_mc_df["validation_score"].idxmin(), "reg_param"
             ]
-
-            source_target = get_corr_source_target(
+            local_corr_stw = get_corr_source_target(
                 X=X_train if my_algo_name == "Pearson" else X_train_ranked,
                 y=y_train if my_algo_name == "Pearson" else y_train_ranked,
                 index=index_of_pred_col,
                 threshold=best_reg_param,
             )
-            source_target_df = pd.DataFrame(
-                source_target, columns=["source", "target", "weight"]
+            local_corr_stw_df = pd.DataFrame(
+                local_corr_stw, columns=["source", "target", "weight"]
             )
-            source_target_df["algorithm"] = my_algo_name
-            source_target_df["data_set_name"] = data_set_name
-            source_target_df["fold_id"] = fold_id
-            source_target_df["index_of_pred_col"] = index_of_pred_col
-            source_target_df["threshold"] = best_reg_param
+            local_corr_stw_df["algorithm"] = my_algo_name
+            local_corr_stw_df["data_set_name"] = data_set_name
+            local_corr_stw_df["fold_id"] = fold_id
+            local_corr_stw_df["index_of_pred_col"] = index_of_pred_col
+            local_corr_stw_df["threshold"] = best_reg_param
 
             if my_algo_name == "Pearson":
-                pearson_source_target_df_list.append(source_target_df)
+                pearson_stw_df_list.append(local_corr_stw_df)
             else:
-                spearman_source_target_df_list.append(source_target_df)
+                spearman_stw_df_list.append(local_corr_stw_df)
 
         if my_algo_name == "GGM" and index_of_pred_col == 0:
-            source_target = get_glasso_source_target(
+            local_ggm_stw = get_glasso_source_target(
                 X=set_data_dict["train"]["X"],
                 y=set_data_dict["train"]["y"],
                 index=index_of_pred_col,
             )
-            source_target_df = pd.DataFrame(
-                source_target, columns=["source", "target", "weight"]
+            local_ggm_stw_df = pd.DataFrame(
+                local_ggm_stw, columns=["source", "target", "weight"]
             )
-            source_target_df["algorithm"] = my_algo_name
-            source_target_df["data_set_name"] = data_set_name
-            source_target_df["fold_id"] = fold_id
-            source_target_df["index_of_pred_col"] = index_of_pred_col
-            source_target_df["threshold"] = None
-            ggm_source_target_df_list.append(source_target_df)
+            local_ggm_stw_df["algorithm"] = my_algo_name
+            local_ggm_stw_df["data_set_name"] = data_set_name
+            local_ggm_stw_df["fold_id"] = fold_id
+            local_ggm_stw_df["index_of_pred_col"] = index_of_pred_col
+            local_ggm_stw_df["threshold"] = None
+            ggm_stw_df_list.append(local_ggm_stw_df)
 
         if my_algo_name == "LASSO":
             hyperparam_list = my_learner.cv_results_["params"]
@@ -213,29 +209,24 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
                 )
             lasso_coef_df_list.append(pd.DataFrame(lasso_mc_df_list))
 
-final_pearson_corr_df = pd.concat(pearson_mc_df_list)
+# Concat and save dataframe as a csv to output directory
+final_corr_mc_df = pd.concat(corr_mc_df_list)
 final_lasso_coef_df = pd.concat(lasso_coef_df_list)
-final_pearson_source_target_df = pd.concat(pearson_source_target_df_list)
-final_spearman_source_target_df = pd.concat(spearman_source_target_df_list)
+final_pearson_stw_df = pd.concat(pearson_stw_df_list)
+final_spearman_stw_df = pd.concat(spearman_stw_df_list)
 
 if index_of_pred_col == 0:
-    final_ggm_source_target_df = pd.concat(ggm_source_target_df_list)
-    final_ggm_source_target_df.to_csv(
-        f"ggm_source_target/{param_row}.csv", encoding="utf-8", index=False
+    final_ggm_stw_df = pd.concat(ggm_stw_df_list)
+    final_ggm_stw_df.to_csv(
+        f"ggm_stw/{param_row}.csv", encoding="utf-8", index=False
     )
-
-# Save dataframe as a csv to output directory
-# print(main_test_df)
-# main_test_df.to_csv(f"results/{param_row}.csv", encoding='utf-8', index=False)
 final_lasso_coef_df.to_csv(f"lasso_coef/{param_row}.csv", encoding="utf-8", index=False)
-final_pearson_corr_df.to_csv(
-    f"pearson_corr/{param_row}.csv", encoding="utf-8", index=False
-)
+final_corr_mc_df.to_csv(f"corr_mc_df/{param_row}.csv", encoding="utf-8", index=False)
 
-final_pearson_source_target_df.to_csv(
-    f"pearson_source_target/{param_row}.csv", encoding="utf-8", index=False
+final_pearson_stw_df.to_csv(
+    f"pearson_stw/{param_row}.csv", encoding="utf-8", index=False
 )
-final_spearman_source_target_df.to_csv(
-    f"spearman_source_target/{param_row}.csv", encoding="utf-8", index=False
+final_spearman_stw_df.to_csv(
+    f"spearman_stw/{param_row}.csv", encoding="utf-8", index=False
 )
 print("Done!!")

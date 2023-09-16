@@ -4,6 +4,8 @@ import numpy as np
 import os
 import shutil
 import sys
+
+
 sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from constants import *
 
@@ -33,13 +35,12 @@ date_time = datetime.now().strftime("%Y-%m-%d_%H:%M")
 job_name = f"model_complexity_{date_time}"
 job_dir = "/scratch/da2343/" + job_name
 
-os.system("mkdir -p "+ os.path.join(job_dir, "results"))
 os.system("mkdir -p "+ os.path.join(job_dir, "lasso_coef"))
-os.system("mkdir -p "+ os.path.join(job_dir, "pearson_corr"))
+os.system("mkdir -p "+ os.path.join(job_dir, "corr_mc_df"))
 
-os.system("mkdir -p "+ os.path.join(job_dir, "pearson_source_target"))
-os.system("mkdir -p "+ os.path.join(job_dir, "spearman_source_target"))
-os.system("mkdir -p "+ os.path.join(job_dir, "ggm_source_target"))
+os.system("mkdir -p "+ os.path.join(job_dir, "pearson_stw"))
+os.system("mkdir -p "+ os.path.join(job_dir, "spearman_stw"))
+os.system("mkdir -p "+ os.path.join(job_dir, "ggm_stw"))
 
 params_concat_df.to_csv(os.path.join(job_dir, "params.csv"), index=False)
 

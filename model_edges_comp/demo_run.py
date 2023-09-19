@@ -40,11 +40,11 @@ shuffled_df_updated = shuffled_df.iloc[:total_samples, :]
 shuffled_arr = np.split(shuffled_df_updated, n_sections)
 
 
-# threshold_param_list = np.concatenate(
-#     (np.linspace(0, 0.2, 125), np.linspace(0.21, 0.4, 21), np.arange(0.5, 1.01, 0.1)))
+threshold_param_list = np.concatenate(
+    (np.linspace(0, 0.2, 125), np.linspace(0.21, 0.4, 21), np.arange(0.5, 1.01, 0.1)))
 # threshold_param_list = np.concatenate((np.linspace(0, 0.4, 5), 
 #      np.linspace(0.41, 0.6, 21), np.arange(0.7, 1.01, 0.1)))
-threshold_param_list = np.arange(0, 1.01, 0.1)
+# threshold_param_list = np.arange(0, 1.01, 0.1)
 threshold_param_dict = [{'threshold': [threshold]}
                         for threshold in threshold_param_list]
 

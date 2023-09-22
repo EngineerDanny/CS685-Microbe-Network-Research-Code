@@ -1,6 +1,7 @@
 import sys
 import os
 import pandas as pd
+import warnings
 import numpy as np
 from datetime import date
 from sklearn.linear_model import *
@@ -11,6 +12,9 @@ from sklearn.model_selection import GridSearchCV
 sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from model_header import *
 from constants import *
+
+warnings.filterwarnings("ignore")
+np.set_printoptions(threshold=np.inf)
 
 params_df = pd.read_csv("params.csv")
 

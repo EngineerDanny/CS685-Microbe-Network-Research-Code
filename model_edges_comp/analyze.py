@@ -16,6 +16,7 @@ date_time = "2023-09-13_20:38"
 #ioral
 # date_time = "2023-09-13_18:53"
 date_time = "2023-09-13_21:04"
+date_time = "2023-09-21_19:47"
 
 
 project_dir = "/projects/genomic-ml/da2343/ml_project_1"

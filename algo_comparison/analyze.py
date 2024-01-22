@@ -21,6 +21,21 @@ date_time = "2023-09-15_18:01"
 # necromass species level OTU data
 date_time = "2023-09-15_20:03"
 
+date_time = "2023-10-02_08:20"
+date_time = "2023-10-02_08:33"
+date_time = "2023-10-02_09:44"
+date_time = "2023-10-02_11:20"
+date_time = "2023-10-02_14:35"
+date_time = "2023-10-02_18:42"
+date_time = "2023-10-02_20:15"
+
+date_time = "2023-10-09_21:20"
+date_time = "2023-10-09_22:56"
+date_time = "2023-10-10_09:23"
+date_time = "2023-10-10_10:37"
+date_time = "2023-10-12_22:17"
+
+
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):
     out_df_list.append(pd.read_csv(out_csv))

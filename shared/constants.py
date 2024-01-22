@@ -38,9 +38,8 @@ dataset_list = [
     # {"dataset_name": "necromass_fungi_conservative",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/fungi_conservative_power_transformed.csv")},
     
-    # {"dataset_name": "necromass_bacteria_fungi_conservative",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_conservative_power_transformed.csv")},
-    
+    {"dataset_name": "necromass_bacteria_fungi_conservative",
+        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_conservative_power_transformed.csv")},
     
 
     # {"dataset_name": "amgut1",
@@ -55,8 +54,8 @@ dataset_list = [
     # {"dataset_name": "crohns",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/crohns_data_power_transformed.csv")},
 
-    {"dataset_name": "ioral",
-     "dataframe": get_df_from_path(f"{root_data_dir}/ioral_data_power_transformed.csv")},
+    # {"dataset_name": "ioral",
+    #  "dataframe": get_df_from_path(f"{root_data_dir}/ioral_data_power_transformed.csv")},
     
     # {"dataset_name": "amgut2",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut2_data_power_transformed.csv")},

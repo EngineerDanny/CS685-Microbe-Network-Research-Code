@@ -21,6 +21,8 @@ date_time = "2023-07-07_13:52" # necromass_bacteria
 date_time = "2023-09-14_20:09" # ioral
 date_time = "2023-09-15_13:40" # crohns
 
+date_time = "2023-10-23_11:59" # necromass_bacteria_fungi
+
 model_comp_dir = "/projects/genomic-ml/da2343/ml_project_1/model_complexity"
 
 # Create a list of subdirectories

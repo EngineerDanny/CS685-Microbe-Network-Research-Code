@@ -17,7 +17,7 @@ for dataset in dataset_list:
     # arrange n_row into 10 folds
     # 9 for ioral, 10 for crohns, 30 for amgut1
     # n_fold = 9 if dataset_name == "ioral" else 10
-    n_fold = 10
+    n_fold = 9
     n_row_fold = int(n_row/n_fold)
     n_row_fold_vec = np.ones(n_fold, dtype=int)*n_row_fold
     n_row_fold_vec[:n_row % n_fold] += 1

@@ -25,7 +25,6 @@ else:
 
 param_dict = dict(params_df.iloc[param_row, :])
 data_set_name = param_dict["Dataset"]
-n_samples = param_dict["# of Total Samples"]
 index_of_pred_col = param_dict["Index of Prediction Col"]
 dataset_path = dataset_dict[data_set_name]
 n_splits = 3
@@ -39,10 +38,6 @@ test_err_list = []
 pred_col_name = df.columns[index_of_pred_col]
 output_vec = df.iloc[:, index_of_pred_col].to_numpy().ravel()
 input_mat = df.drop(pred_col_name, axis=1).to_numpy()
-
-test_err_list = []
-output_vec = dataset_pd.iloc[:, index_of_pred_col].to_numpy().ravel()
-input_mat = dataset_pd.drop(dataset_pd.columns[index_of_pred_col], axis=1).to_numpy()
 
 k_fold = KFold(n_splits=n_splits, shuffle=True, random_state=1)
 for fold_id, indices in enumerate(k_fold.split(input_mat)):
@@ -66,10 +61,9 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
                 {
                     "Mean Squared Error": mse,
                     "FoldID": fold_id,
-                    "# of Total Samples": n_samples,
                     "Dataset": data_set_name,
                     "Index of Predicted Column": index_of_pred_col,
-                    "pred_col_name": pred_col_name,
+                    "Predicted Column Name": pred_col_name,
                     "Algorithm": learner_name
                 },
                 index=[0],

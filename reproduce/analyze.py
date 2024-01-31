@@ -3,6 +3,11 @@ import pandas as pd
 from glob import glob
 
 date_time = "2024-01-24_20:40"
+date_time = "2024-01-30_13:25"
+date_time = "2024-01-30_15:14"
+date_time = "2024-01-30_15:31" # classifier
+date_time = "2024-01-31_11:30" # classifier_reg
+
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):

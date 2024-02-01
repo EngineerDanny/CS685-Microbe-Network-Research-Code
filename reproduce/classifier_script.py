@@ -31,13 +31,9 @@ dataset_path = dataset_dict[data_set_name]
 n_splits = 3
 # Import the csv file of the dataset
 df = pd.read_csv(dataset_path, header=0)
-reg_learner_dict = {
-    "Featureless": Featureless(),
-    "LassoCV": LassoCV(random_state=1),
-}
 classifier_dict = {
     "FeaturelessClassifier": DummyClassifier(strategy="most_frequent"),
-    "LogisticRegression": LogisticRegressionCV(random_state=1),
+    "LogisticRegressionCV": LogisticRegressionCV(random_state=1, penalty="l1")
 }
 
 test_err_list = []
@@ -75,12 +71,17 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
             pred_y = learner.predict(set_data_dict["test"]["X"])
         
         actual_y = set_data_dict["test"]["y"]
+        fpr, tpr, _ = roc_curve(actual_y, pred_y)
+        
         test_err_list.append(
             pd.DataFrame(
                 {
                     "Test Accuracy": accuracy_score(actual_y, pred_y),
                     "Precision": precision_score(actual_y, pred_y),
                     "Recall": recall_score(actual_y, pred_y),
+                    "AUC": roc_auc_score(actual_y, pred_y),
+                    "FPR": np.array2string(fpr),
+                    "TPR": np.array2string(tpr),
                     "FoldID": fold_id,
                     "Dataset": data_set_name,
                     "Index of Predicted Column": index_of_pred_col,

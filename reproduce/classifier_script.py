@@ -77,9 +77,6 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
             pd.DataFrame(
                 {
                     "Test Accuracy": accuracy_score(actual_y, pred_y),
-                    "Precision": precision_score(actual_y, pred_y),
-                    "Recall": recall_score(actual_y, pred_y),
-                    "AUC": roc_auc_score(actual_y, pred_y),
                     "FPR": np.array2string(fpr),
                     "TPR": np.array2string(tpr),
                     "FoldID": fold_id,

@@ -13,6 +13,8 @@ date_time = "2024-02-02_11:33" # classifier
 date_time = "2024-02-04_19:53" # classifier_reg
 date_time = "2024-02-04_22:36" # classifier_reg
 
+date_time = "2024-02-05_10:50" # reg
+
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):

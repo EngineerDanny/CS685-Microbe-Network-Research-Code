@@ -106,11 +106,11 @@ dataset_list = [
     {"dataset_name": "hmp216S",
      "dataframe": get_df_from_path(f"{root_data_dir}/hmp216S_data_power_transformed.csv")},
 
-    # {"dataset_name": "baxter_crc",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/baxter_crc_data_power_transformed.csv")},
+    {"dataset_name": "baxter_crc",
+        "dataframe": get_df_from_path(f"{root_data_dir}/baxter_crc_data_power_transformed.csv")},
 
-    # {"dataset_name": "glne007",
-    #  "dataframe": get_df_from_path(f"{root_data_dir}/glne007_data_power_transformed.csv")},
+    {"dataset_name": "glne007",
+     "dataframe": get_df_from_path(f"{root_data_dir}/glne007_data_power_transformed.csv")},
 ]
 
 

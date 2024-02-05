@@ -28,7 +28,7 @@ for dataset in dataset_list:
     
     # remove all values less than 50 in n_row_fold_cumsum
     # n_row_fold_cumsum = n_row_fold_cumsum[n_row_fold_cumsum >= 50]
-    n_row_fold_cumsum = n_row_fold_cumsum[n_row_fold_cumsum % 12 == 0]
+    n_row_fold_cumsum = n_row_fold_cumsum[n_row_fold_cumsum % 10 == 0]
 
     n_col_list = np.arange(n_col)
 
@@ -39,7 +39,8 @@ for dataset in dataset_list:
     }
 
     params_df = (
-        pd.MultiIndex.from_product(params_dict.values(), names=params_dict.keys())
+        pd.MultiIndex.from_product(params_dict.values(), 
+                                   names=params_dict.keys())
         .to_frame()
         .reset_index(drop=True)
     )

@@ -34,13 +34,17 @@ df = pd.read_csv(dataset_path, header=0)
 
 classifier_reg_dict = {
     "Featureless": {
-        "classifier": DummyClassifier(strategy="most_frequent"),
+        "classifier": None,
         "regressor": Featureless(),
      },
-    "LogisticRegLassoCV": {
-        "classifier": LogisticRegressionCV(random_state=1),
+    "LogisticRegGaussianGraphicalModel": {
+        "classifier": None,
+        "regressor": GaussianGraphicalModel(),
+    },
+    "LassoCV": {
+        "classifier": None,
         "regressor": LassoCV(random_state=1),
-    }
+    },
 }    
     
 
@@ -75,15 +79,17 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
                              np.unique(set_data_dict["train"]["y_class"])[0])
         else:
             classifier = learner["classifier"]
-            classifier.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_class"])
-            classifier_pred_y = classifier.predict(set_data_dict["test"]["X"])
-            
-            regressor = learner["regressor"]
-            regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])
-            regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
-            # when the classifier predicts 0 then the regressor prediction is set to 0
-            # when the classifier predicts 1 then the regressor prediction is set to the regressor prediction
-            pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
+            if classifier != None:
+                classifier.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_class"])
+                classifier_pred_y = classifier.predict(set_data_dict["test"]["X"])
+                regressor = learner["regressor"]
+                regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])
+                regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
+                pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
+            else:
+                regressor = learner["regressor"]
+                regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])
+                pred_y = regressor.predict(set_data_dict["test"]["X"])
             
         actual_y = set_data_dict["test"]["y_reg"]
         test_err_list.append(

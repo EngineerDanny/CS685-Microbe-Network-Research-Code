@@ -52,8 +52,13 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
     # Predict the test data
     # Calculate the test error
     for learner_name, learner in learner_dict.items():
-        learner.fit(**set_data_dict["train"])
-        pred_y = learner.predict(set_data_dict["test"]["X"])
+        if len(np.unique(set_data_dict["train"]["y"])) == 1:
+            # predict all test data as the class that is present in y_train
+            pred_y = np.full(set_data_dict["test"]["y"].shape, 
+                             np.unique(set_data_dict["train"]["y"])[0])
+        else:
+            learner.fit(**set_data_dict["train"])
+            pred_y = learner.predict(set_data_dict["test"]["X"])
         actual_y = set_data_dict["test"]["y"]
         mse = mean_squared_error(actual_y, pred_y)
         test_err_list.append(

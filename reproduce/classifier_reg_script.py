@@ -37,12 +37,16 @@ classifier_reg_dict = {
         "classifier": None,
         "regressor": Featureless(),
      },
-    "LogisticRegGaussianGraphicalModel": {
-        "classifier": None,
-        "regressor": GaussianGraphicalModel(),
-    },
     "LassoCV": {
         "classifier": None,
+        "regressor": LassoCV(random_state=1),
+    },
+    # "GGM": {
+    #     "classifier": None,
+    #     "regressor": GaussianGraphicalModel(),
+    # },
+    "LogisticRegLassoCV": {
+        "classifier": LogisticRegressionCV(),
         "regressor": LassoCV(random_state=1),
     },
 }    

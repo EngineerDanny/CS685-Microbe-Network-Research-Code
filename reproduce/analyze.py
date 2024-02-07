@@ -16,6 +16,11 @@ time = "2024-02-04_22:36" # classifier_reg
 time = "2024-02-05_10:50" # reg
 time = "2024-02-05_12:00" # reg
 time = "2024-02-05_22:08" # reg
+time = "2024-02-06_11:56" # classifier_reg
+time = "2024-02-06_14:07" # classifier_reg
+time = "2024-02-06_14:55" # classifier_reg
+time = "2024-02-06_15:08" # classifier_reg
+time = "2024-02-06_15:45" # classifier_reg
 
 
 out_df_list = []

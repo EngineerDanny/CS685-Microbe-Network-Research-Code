@@ -33,7 +33,7 @@ df = pd.read_csv(dataset_path, header=0)
 learner_dict = {
     "Featureless": Featureless(),
     "LassoCV": LassoCV(random_state=1),
-    "GGM": GaussianGraphicalModel(),
+    # "GGM": GaussianGraphicalModel(),
 }
 test_err_list = []
 pred_col_name = df.columns[index_of_pred_col]

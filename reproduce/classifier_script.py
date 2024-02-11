@@ -33,7 +33,7 @@ n_splits = 3
 df = pd.read_csv(dataset_path, header=0)
 classifier_dict = {
     "FeaturelessClassifier": DummyClassifier(strategy="most_frequent"),
-    "LogisticRegressionCV": LogisticRegressionCV(random_state=1, penalty="l1", solver="liblinear"),
+    "LogisticRegressionCV": LogisticRegressionCV(random_state=1),
 }
 
 test_err_list = []

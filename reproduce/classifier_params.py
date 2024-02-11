@@ -4,43 +4,16 @@ import numpy as np
 import os
 import shutil
 import sys
-
 sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from constants import *
 
 params_df_list = []
-dataset_list = [
-    {"dataset_name": "Dec22_all_power",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_power_transformed.csv")},
- 
-    {"dataset_name": "Dec22_same_soil_power",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_power_transformed.csv")},
-    
-    {"dataset_name": "Dec22_same_melan_high_power",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_power_transformed.csv")},
-    
-    {"dataset_name": "Dec22_same_melan_low_power",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_power_transformed.csv")},
-    
-    {"dataset_name": "Dec22_all_log",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_log_transformed.csv")},
-    
-    {"dataset_name": "Dec22_same_soil_log",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_log_transformed.csv")},
-    
-    {"dataset_name": "Dec22_same_melan_high_log",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_log_transformed.csv")},
-    
-    {"dataset_name": "Dec22_same_melan_low_log",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_log_transformed.csv")},
-    ]
 
 for dataset in dataset_list:
     dataset_name = dataset["dataset_name"]
     df = dataset["dataframe"]
     n_row, n_col = df.shape
     n_col_list = np.arange(n_col)
-
     params_dict = {
         "Dataset": [dataset_name],
         "Index of Prediction Col": n_col_list,

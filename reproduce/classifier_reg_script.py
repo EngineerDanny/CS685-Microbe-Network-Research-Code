@@ -86,10 +86,17 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
             if classifier != None:
                 classifier.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_class"])
                 classifier_pred_y = classifier.predict(set_data_dict["test"]["X"])
-                regressor = learner["regressor"]
-                regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])
-                regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
-                pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
+                # fit regressor only on rows where y_class is 1
+                X_reg_train = set_data_dict["train"]["X"][set_data_dict["train"]["y_class"] == 1]
+                y_reg_train = set_data_dict["train"]["y_reg"][set_data_dict["train"]["y_class"] == 1]
+                # check if y_reg_train is empty
+                if len(y_reg_train) != 0:
+                    regressor = learner["regressor"]
+                    regressor.fit(X_reg_train, y_reg_train)
+                    regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
+                    pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
+                else:
+                    pred_y = classifier_pred_y
             else:
                 regressor = learner["regressor"]
                 regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])

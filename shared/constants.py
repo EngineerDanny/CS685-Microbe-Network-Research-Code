@@ -10,41 +10,41 @@ def get_df_from_path(path):
 root_data_dir = "/projects/genomic-ml/da2343/ml_project_1/data"
 
 
-dataset_list = [
+# dataset_list = [
     
-    # {"dataset_name": "Dec22_all_power",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_power_transformed.csv")},
+#     # {"dataset_name": "Dec22_all_power",
+#     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_power_transformed.csv")},
  
-    # {"dataset_name": "Dec22_same_soil_power",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_power_transformed.csv")},
+#     # {"dataset_name": "Dec22_same_soil_power",
+#     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_power_transformed.csv")},
     
-    # {"dataset_name": "Dec22_same_melan_high_power",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_power_transformed.csv")},
+#     # {"dataset_name": "Dec22_same_melan_high_power",
+#     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_power_transformed.csv")},
     
-    # {"dataset_name": "Dec22_same_melan_low_power",
-    #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_power_transformed.csv")},
+#     # {"dataset_name": "Dec22_same_melan_low_power",
+#     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_power_transformed.csv")},
     
-    {"dataset_name": "All Samples",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_log_transformed.csv")},
+#     {"dataset_name": "All Samples",
+#         "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_log_transformed.csv")},
     
-    {"dataset_name": "Habitat=soil",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_log_transformed.csv")},
+#     {"dataset_name": "Habitat=soil",
+#         "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_log_transformed.csv")},
     
-    {"dataset_name": "Melanization=high",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_log_transformed.csv")},
+#     {"dataset_name": "Melanization=high",
+#         "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_log_transformed.csv")},
     
-    {"dataset_name": "Melanization=low",
-        "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_log_transformed.csv")},
-    ]
+#     {"dataset_name": "Melanization=low",
+#         "dataframe": get_df_from_path(f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_log_transformed.csv")},
+#     ]
 
-dataset_dict = {    
-    "All Samples": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_log_transformed.csv",
-    "Habitat=soil": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_log_transformed.csv",
-    "Melanization=high": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_log_transformed.csv",
-    "Melanization=low": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_log_transformed.csv"
-}
+# dataset_dict = {    
+#     "All Samples": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_all_log_transformed.csv",
+#     "Habitat=soil": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_soil_log_transformed.csv",
+#     "Melanization=high": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_high_log_transformed.csv",
+#     "Melanization=low": f"{root_data_dir}/necromass/Dec22_bacteria_fungi_conservative_r_same_melan_low_log_transformed.csv"
+# }
 
-'''
+
 dataset_list = [
     
     ## Necromass datasets with species level data
@@ -140,4 +140,3 @@ dataset_dict = {
     'mixmpln': f'{root_data_dir}/mixmpln_real_data_power_transformed.csv',
     'soilrep': f'{root_data_dir}/soilrep_data_power_transformed.csv',
 }
-'''

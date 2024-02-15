@@ -47,7 +47,7 @@ classifier_reg_dict = {
     # },
     "LogisticRegLassoCV": {
         "classifier": LogisticRegressionCV(),
-        "regressor": LassoCV(random_state=1),
+        "regressor": LassoCV(random_state=1, cv=2),
     },
 }    
     
@@ -89,14 +89,20 @@ for fold_id, indices in enumerate(k_fold.split(input_mat)):
                 # fit regressor only on rows where y_class is 1
                 X_reg_train = set_data_dict["train"]["X"][set_data_dict["train"]["y_class"] == 1]
                 y_reg_train = set_data_dict["train"]["y_reg"][set_data_dict["train"]["y_class"] == 1]
-                # check if y_reg_train is empty
-                if len(y_reg_train) != 0:
+                
+                try:
+                    # check if y_reg_train is empty
+                    if len(y_reg_train) != 0:
+                        regressor = learner["regressor"]
+                        regressor.fit(X_reg_train, y_reg_train)
+                        regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
+                        pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
+                    else:
+                        pred_y = classifier_pred_y
+                except Exception as e:
                     regressor = learner["regressor"]
-                    regressor.fit(X_reg_train, y_reg_train)
-                    regressor_pred_y = regressor.predict(set_data_dict["test"]["X"])
-                    pred_y = np.where(classifier_pred_y == 0, 0, regressor_pred_y)
-                else:
-                    pred_y = classifier_pred_y
+                    regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])
+                    pred_y = regressor.predict(set_data_dict["test"]["X"])
             else:
                 regressor = learner["regressor"]
                 regressor.fit(set_data_dict["train"]["X"], set_data_dict["train"]["y_reg"])

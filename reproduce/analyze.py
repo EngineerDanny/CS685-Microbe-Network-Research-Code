@@ -26,6 +26,9 @@ time = "2024-02-06_21:47" # reg
 time = "2024-02-09_11:36" # classifier
 time = "2024-02-09_12:57" # classifier_reg
 
+time = "2024-02-14_18:33" # classifier_reg
+time = "2024-02-14_18:48" # classifier_reg
+
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{time}/results/*.csv"):
     out_df_list.append(pd.read_csv(out_csv))

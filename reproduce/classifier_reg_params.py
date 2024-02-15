@@ -64,4 +64,3 @@ msg = f"""created params CSV files and job scripts, test with
 python {run_orig_py}
 SLURM_ARRAY_TASK_ID=0 bash {run_one_sh}"""
 print(msg)
-

@@ -4,7 +4,6 @@ import numpy as np
 import os
 import shutil
 import sys
-
 sys.path.append(os.path.abspath("/projects/genomic-ml/da2343/ml_project_1/shared"))
 from constants import *
 

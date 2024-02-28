@@ -51,7 +51,8 @@ run_one_sh = os.path.join(job_dir, "run_one.sh")
 with open(run_one_sh, "w") as run_one_f:
     run_one_f.write(run_one_contents)
 
-run_orig_py = "classifier_reg_script.py"
+# run_orig_py = "classifier_reg_script.py"
+run_orig_py = "classifier_reg_script_u.py"
 run_one_py = os.path.join(job_dir, "run_one.py")
 shutil.copyfile(run_orig_py, run_one_py)
 orig_dir = os.path.dirname(run_orig_py)

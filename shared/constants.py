@@ -47,6 +47,19 @@ root_data_dir = "/projects/genomic-ml/da2343/ml_project_1/data"
 
 dataset_list = [
     
+       {"dataset_name": "HMPv13",
+        "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv13_otu_table_log.csv")},
+       {"dataset_name": "HMPv35",
+        "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv35_otu_table_log.csv")},
+    #    {"dataset_name": "MovingPictures",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/MovingPictures_otu_table_log.csv")},
+    #    {"dataset_name": "qa10394",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/qa10394_otu_table_log.csv")},
+    #    {"dataset_name": "TwinsUK",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/TwinsUK_otu_table_log.csv")},
+
+    
+    
     ## Necromass datasets with species level data
     # {"dataset_name": "necromass_bacteria_species",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
@@ -84,14 +97,14 @@ dataset_list = [
     # {"dataset_name": "amgut1_standard_scaled",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_standard_scaled.csv")},
 
-    {"dataset_name": "amgut1",
-        "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_log_standard_scaled_transformed.csv")},
+    # {"dataset_name": "amgut1",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_log_standard_scaled_transformed.csv")},
 
-    {"dataset_name": "crohns",
-        "dataframe": get_df_from_path(f"{root_data_dir}/crohns_data_log_standard_scaled_transformed.csv")},
+    # {"dataset_name": "crohns",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/crohns_data_log_standard_scaled_transformed.csv")},
 
-    {"dataset_name": "ioral",
-     "dataframe": get_df_from_path(f"{root_data_dir}/ioral_data_log_standard_scaled_transformed.csv")},
+    # {"dataset_name": "ioral",
+    #  "dataframe": get_df_from_path(f"{root_data_dir}/ioral_data_log_standard_scaled_transformed.csv")},
     
     # {"dataset_name": "amgut2",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut2_data_power_transformed.csv")},
@@ -123,6 +136,12 @@ dataset_dict = {
     "necromass_bacteria_conservative": f"{root_data_dir}/necromass/bacteria_conservative_power_transformed.csv",
     "necromass_fungi_conservative": f"{root_data_dir}/necromass/fungi_conservative_power_transformed.csv",
     "necromass_bacteria_fungi_conservative": f"{root_data_dir}/necromass/bacteria_fungi_conservative_power_transformed.csv",
+    
+    "HMPv13": f"{root_data_dir}/microbe_ds/HMPv13_otu_table_log.csv",
+    "HMPv35": f"{root_data_dir}/microbe_ds/HMPv35_otu_table_log.csv",
+    "MovingPictures": f"{root_data_dir}/microbe_ds/MovingPictures_otu_table_log.csv",
+    "qa10394": f"{root_data_dir}/microbe_ds/qa10394_otu_table_log.csv",
+    "TwinsUK": f"{root_data_dir}/microbe_ds/TwinsUK_otu_table_log.csv",
     
     # "amgut1": f"{root_data_dir}/amgut1_data_power_transformed.csv",
     "amgut1": f"{root_data_dir}/amgut1_data_log_standard_scaled_transformed.csv",

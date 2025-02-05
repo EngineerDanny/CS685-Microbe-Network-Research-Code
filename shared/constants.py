@@ -47,10 +47,10 @@ root_data_dir = "/projects/genomic-ml/da2343/ml_project_1/data"
 
 dataset_list = [
     
-       {"dataset_name": "HMPv13",
-        "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv13_otu_table_log.csv")},
-       {"dataset_name": "HMPv35",
-        "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv35_otu_table_log.csv")},
+    #    {"dataset_name": "HMPv13",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv13_otu_table_log.csv")},
+    #    {"dataset_name": "HMPv35",
+    #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/HMPv35_otu_table_log.csv")},
     #    {"dataset_name": "MovingPictures",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/MovingPictures_otu_table_log.csv")},
     #    {"dataset_name": "qa10394",
@@ -58,8 +58,6 @@ dataset_list = [
     #    {"dataset_name": "TwinsUK",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/microbe_ds/TwinsUK_otu_table_log.csv")},
 
-    
-    
     ## Necromass datasets with species level data
     # {"dataset_name": "necromass_bacteria_species",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_rarefied_otu_mapping_PKfixTrimmed_power_transformed.csv")},
@@ -90,7 +88,6 @@ dataset_list = [
     # {"dataset_name": "necromass_bacteria_fungi_conservative",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/necromass/bacteria_fungi_conservative_power_transformed.csv")},
     
-
     # {"dataset_name": "amgut1",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/amgut1_data_power_transformed.csv")},
     
@@ -117,9 +114,15 @@ dataset_list = [
 
     # {"dataset_name": "baxter_crc",
     #     "dataframe": get_df_from_path(f"{root_data_dir}/baxter_crc_data_power_transformed.csv")},
+    
+    {"dataset_name": "mixmpln",
+        "dataframe": get_df_from_path(f"{root_data_dir}/mixmpln_real_data_power_transformed.csv")},
+    
+    {"dataset_name": "enterotype",
+        "dataframe": get_df_from_path(f"{root_data_dir}/enterotype_data_power_transformed.csv")},
 
-    # {"dataset_name": "glne007",
-    #  "dataframe": get_df_from_path(f"{root_data_dir}/glne007_data_power_transformed.csv")},
+    {"dataset_name": "glne007",
+     "dataframe": get_df_from_path(f"{root_data_dir}/glne007_data_power_transformed.csv")},
 ]
 
 

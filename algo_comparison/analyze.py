@@ -36,6 +36,8 @@ date_time = "2023-10-10_10:37"
 date_time = "2023-10-12_22:17"
 date_time = "2024-02-05_08:41"
 
+date_time = "2025-02-03_19:29"
+date_time = "2025-02-03_19:41"
 
 out_df_list = []
 for out_csv in glob(f"/scratch/da2343/algo_comparison_{date_time}/results/*.csv"):
